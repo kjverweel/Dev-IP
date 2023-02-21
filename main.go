@@ -26,8 +26,7 @@ func main() {
 	e.GET("/home", handlers.Home)
 	e.GET("/register", handlers.Registerscreen)
 	e.POST("/register", handlers.Register)
-	e.GET("/groepjes", handlers.Groepjes)
-	e.GET("/groepjes", handlers.GroepjesScreen)
+	e.GET("/groups", handlers.Groepjes)
 	if err := e.Start(":1323"); err != nil {
 		fmt.Println("Error starting the server: ", err)
 	}
