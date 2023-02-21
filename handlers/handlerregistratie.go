@@ -6,6 +6,8 @@ import (
 	"main.go/models"
 	"main.go/repositories"
 	"net/http"
+	"strconv"
+	"time"
 )
 
 func Register(e echo.Context) error {
@@ -26,5 +28,10 @@ func Register(e echo.Context) error {
 	} else {
 		fmt.Println("Succesfully called")
 	}
+	e.SetCookie(&http.Cookie{
+		Expires: time.Now().Add(time.Hour * 999),
+		Name:    "User",
+		Value:   strconv.Itoa(int(newUser.ID)),
+	})
 	return e.Redirect(http.StatusSeeOther, "/home")
 }
