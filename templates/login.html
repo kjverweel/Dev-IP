@@ -1,0 +1,22 @@
+{{define "login"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>KILL ME</title>
+</head>
+<body>
+<nav>
+    <a href="/">Home</a>
+</nav>
+<h1>login</h1>
+<form action="/login" method="post">
+<p>gebruikersnaam</p>
+<input type="text" placeholder="Username/Email" name="Username">{{.UserDoesntExist}}
+<p>wachtwoord</p>
+<input type="text" placeholder="Password" name="Password">
+    <input type="submit" value="login">
+</form>
+</body>
+</html>
+{{end}}

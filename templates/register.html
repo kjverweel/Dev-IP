@@ -1,0 +1,25 @@
+{{define "register"}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Registreren</title>
+</head>
+<body>
+<nav>
+  <a href="/">Home</a>
+</nav>
+<h1>Register</h1> {{.Name}}
+<form action="/register" method="post">
+  <p>Email-Adres</p>
+  <input type="text" placeholder="voorbeeld@gmail.com" name="Email">
+  <p>gebruikersnaam</p>
+  <input type="text" placeholder="Username" name="Username">
+  <p>wachtwoord</p>
+  <input type="text" placeholder="Password" name="Password">
+  <input type="submit" value="Register">
+  {{.NuhUh}}
+</form>
+</body>
+</html>
+{{end}}
