@@ -27,3 +27,7 @@ func Home(e echo.Context) error {
 	}
 	return nil
 }
+
+func GroepjesScreen(e echo.Context) error {
+	return e.Render(http.StatusOK, "/groepjes", nil)
+}
