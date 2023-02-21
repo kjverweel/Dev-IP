@@ -12,11 +12,11 @@
 <h1>Register</h1> {{.Name}}
 <form action="/register" method="post">
   <p>Email-Adres</p>
-  <input type="text" placeholder="voorbeeld@gmail.com" name="Email">
+  <input type="email" placeholder="voorbeeld@gmail.com" name="Email">
   <p>gebruikersnaam</p>
   <input type="text" placeholder="Username" name="Username">
   <p>wachtwoord</p>
-  <input type="text" placeholder="Password" name="Password">
+  <input type="password" placeholder="Password" name="Password">
   <input type="submit" value="Register">
   {{.NuhUh}}
 </form>
