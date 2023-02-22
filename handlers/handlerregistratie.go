@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
+	"log"
 	"main.go/models"
 	"main.go/repositories"
 	"net/http"
@@ -18,15 +18,15 @@ func Register(e echo.Context) error {
 	}
 	YouHere, err := repositories.CompareUsers(newUser)
 	if err != nil || YouHere {
-		fmt.Println("User already exist or You did fucky")
+		log.Println("User already exist or You did fucky")
 		return e.Render(http.StatusOK, "register", echo.Map{"NuhUh": "Deze user bestaat al, wees origineel"})
 
 	}
 	err = repositories.NewUsers(newUser)
 	if err != nil {
-		fmt.Println("Repository got fucked")
+		log.Println("Repository got fucked")
 	} else {
-		fmt.Println("Succesfully called")
+		log.Println("Succesfully called")
 	}
 	e.SetCookie(&http.Cookie{
 		Expires: time.Now().Add(time.Hour * 999),

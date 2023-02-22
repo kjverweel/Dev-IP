@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"html/template"
+	"log"
 	"main.go/handlers"
 	"main.go/models"
 	"main.go/repositories"
@@ -13,7 +13,7 @@ func main() {
 	e := echo.New()
 	tpl, err := template.ParseGlob("./templates/*html")
 	if err != nil {
-		fmt.Println("Error loading templates: ", err)
+		log.Println("Error loading templates: ", err)
 		return
 	}
 	t := models.NewTemplate(tpl)
@@ -29,6 +29,6 @@ func main() {
 	e.GET("/groups", handlers.Groups)
 	e.POST("/groupmade", handlers.CreateGroup)
 	if err := e.Start(":1323"); err != nil {
-		fmt.Println("Error starting the server: ", err)
+		log.Println("Error starting the server: ", err)
 	}
 }

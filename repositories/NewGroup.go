@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"fmt"
+	"log"
 	"main.go/models"
 )
 
@@ -10,7 +10,7 @@ func NewGroup(newGroup *models.Groups) error {
 	if err != nil {
 		return err
 	} else {
-		fmt.Println("groep is aangemaakt :D")
+		log.Println("groep is aangemaakt :D")
 	}
 	return nil
 }

@@ -1,7 +1,7 @@
 package repositories
 
 import (
-	"fmt"
+	"log"
 	"main.go/models"
 )
 
@@ -10,7 +10,7 @@ func NewUsers(newUser *models.Users) error {
 	if err != nil {
 		return err
 	} else {
-		fmt.Println("User is aangemaakt :D")
+		log.Println("User is aangemaakt :D")
 	}
 	return nil
 }

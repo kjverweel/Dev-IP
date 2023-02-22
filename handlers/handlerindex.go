@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
+	"log"
 	"net/http"
 )
 
@@ -11,7 +11,7 @@ func Loginscreen(e echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	} else {
-		fmt.Println("Succesfully made it to login!")
+		log.Println("Succesfully made it to login!")
 	}
 	return nil
 }
@@ -21,7 +21,7 @@ func Registerscreen(e echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	} else {
-		fmt.Println("Succesfully made it to register!")
+		log.Println("Succesfully made it to register!")
 	}
 	return nil
 }

@@ -1,8 +1,8 @@
 package repositories
 
 import (
-	"fmt"
 	"gorm.io/gorm"
+	"log"
 	"main.go/models"
 )
 
@@ -12,7 +12,7 @@ func CheckGroup(newGroup *models.Groups) (bool, error) {
 	if err == gorm.ErrRecordNotFound {
 		return false, nil
 	} else if err != nil {
-		fmt.Println("This is where it go wrong wrong")
+		log.Println("This is where it go wrong wrong")
 	}
 	return true, nil
 }

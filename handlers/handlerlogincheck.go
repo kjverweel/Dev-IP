@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"fmt"
 	"github.com/labstack/echo/v4"
 	"log"
 	"main.go/models"
@@ -21,10 +20,10 @@ func Login(e echo.Context) error {
 	}
 
 	log.Println(existingUser)
-	
+
 	YouExist := repositories.LoginUser(existingUser)
 	if !YouExist {
-		fmt.Println("User doesn't exist")
+		log.Println("User doesn't exist")
 		return e.Render(http.StatusOK, "login", echo.Map{"UserDoesntExist": "Deze user bestaat niet, probeer opnieuw"})
 	}
 	e.SetCookie(&http.Cookie{

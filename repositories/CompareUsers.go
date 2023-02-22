@@ -1,7 +1,6 @@
 package repositories
 
 import (
-	"fmt"
 	"gorm.io/gorm"
 	"main.go/models"
 )
@@ -12,7 +11,7 @@ func CompareUsers(newUser *models.Users) (bool, error) {
 	if err == gorm.ErrRecordNotFound {
 		return false, nil
 	} else if err != nil {
-		fmt.Println("This is where it go wrong wrong")
+		log.Println("This is where it go wrong wrong")
 	}
 	return true, nil
 }
