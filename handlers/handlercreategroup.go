@@ -16,7 +16,7 @@ func CreateGroup(e echo.Context) error {
 	GroupExists, err := repositories.CheckGroup(newGroup)
 	if err != nil || GroupExists {
 		log.Println("group already exist or You did fucky")
-		return e.Render(http.StatusOK, "groups", nil)
+		return e.Render(http.StatusOK, "groups", echo.Map{"ErrorGroep": "Sorry, deze naam is al in gebruik."})
 	}
 	err = repositories.NewGroup(newGroup)
 	if err != nil {
@@ -24,5 +24,5 @@ func CreateGroup(e echo.Context) error {
 	} else {
 		log.Println("Succesfully called")
 	}
-	return e.Redirect(http.StatusSeeOther, "/home")
+	return e.Redirect(http.StatusSeeOther, "/groepmade")
 }
