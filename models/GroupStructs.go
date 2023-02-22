@@ -4,6 +4,6 @@ import "gorm.io/gorm"
 
 type Groups struct {
 	gorm.Model
-	groep_name  string `gorm:"type:varchar(255)"`
-	groep_admin string `gorm:"type:varchar(255)"`
+	Groepname  string `gorm:"type:varchar(255)"`
+	Groepadmin string `gorm:"type:varchar(255)"`
 }
