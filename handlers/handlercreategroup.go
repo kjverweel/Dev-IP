@@ -24,5 +24,5 @@ func CreateGroup(e echo.Context) error {
 	} else {
 		log.Println("Succesfully called")
 	}
-	return e.Redirect(http.StatusSeeOther, "/groepmade")
+	return e.Redirect(http.StatusSeeOther, "/home")
 }

@@ -27,7 +27,7 @@ func main() {
 	e.GET("/register", handlers.Registerscreen)
 	e.POST("/register", handlers.Register)
 	e.GET("/groups", handlers.Groups)
-	e.POST("/groupmade", handlers.CreateGroup)
+	e.POST("/home", handlers.CreateGroup)
 	if err := e.Start(":1323"); err != nil {
 		log.Println("Error starting the server: ", err)
 	}
