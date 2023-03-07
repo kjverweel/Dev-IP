@@ -21,7 +21,9 @@ func Home(e echo.Context) error {
 	if err != nil {
 		panic(err)
 	}
-	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname})
+	groepnames := &models.Groups{}
+	err = repositories.GetGroup(&groepnames)
+	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groepnames.Groepname})
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
