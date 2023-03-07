@@ -15,7 +15,9 @@
 
 
 <h1>Dit zijn alle Groepen :)</h1>
-{{.Groups}}
+{{range  .Groups}}
+<li>{{ . }}</li>
+{{end}}
 
 </body>
 </html>
