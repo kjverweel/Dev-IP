@@ -16,6 +16,7 @@ func Home(e echo.Context) error {
 	userId, err := strconv.ParseUint(cookie.Value, 10, 64)
 	if err != nil {
 		log.Println("Couldn't get cookie")
+		e.Render(http.StatusOK, "index", nil)
 	}
 	user := &models.Users{}
 	err = repositories.GetUser(uint(userId), &user)
