@@ -10,6 +10,7 @@ import (
 )
 
 func GetNewMemberInfo(e echo.Context) error {
+	//Cookiecode
 	// get cookie from request
 	cookie, err := e.Cookie("User")
 	// parse cookie string value to uint
@@ -23,6 +24,7 @@ func GetNewMemberInfo(e echo.Context) error {
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get cookie")
 	}
+	//end of Cookiecode
 
 	if e.FormValue("UserName") == "" || e.FormValue("GroupName") == "" {
 		return e.Render(http.StatusUnauthorized, "member", nil)
