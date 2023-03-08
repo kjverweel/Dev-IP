@@ -11,7 +11,7 @@ func LoginUser(YouExist *models.Users) bool {
 		log.Println(err.Error())
 		return false
 	} else {
-		log.Println("Login Succesvol")
+		log.Println("Logincheck.go:Login Succesvol")
 	}
 
 	return true

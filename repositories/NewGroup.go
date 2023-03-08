@@ -10,7 +10,7 @@ func NewGroup(newGroup *models.Groups) error {
 	if err != nil {
 		return err
 	} else {
-		log.Println("groep is aangemaakt :D")
+		log.Println("NewGroup.go:groep is aangemaakt :D")
 	}
 	return nil
 }

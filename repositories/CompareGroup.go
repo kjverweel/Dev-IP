@@ -12,7 +12,7 @@ func CheckGroup(newGroup *models.Groups) (bool, error) {
 	if err == gorm.ErrRecordNotFound {
 		return false, nil
 	} else if err != nil {
-		log.Println("This is where it go wrong wrong")
+		log.Println("CompareGroup.go:This is where it go wrong wrong")
 	}
 	return true, nil
 }

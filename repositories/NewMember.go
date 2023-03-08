@@ -11,7 +11,7 @@ func NewMember(newMember *models.Groupmembers, groups *models.Groups) error {
 	if err != nil {
 		return err
 	} else {
-		log.Println("Lid is toegevoegd aan de groep")
+		log.Println("NewMember.go:Lid is toegevoegd aan de groep")
 	}
 	return nil
 }
