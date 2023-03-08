@@ -16,6 +16,8 @@ func GetNewMemberInfo(e echo.Context) error {
 	// parse cookie string value to uint
 	userId, err := strconv.ParseUint(cookie.Value, 10, 64)
 	if err != nil {
+		//if an error occurs in Cookiecode this usually means that the user isn't logged in properly.
+		//this e.Render causes a direct to the index page, where you can log in or register an account.
 		log.Println("handlerhome.go:Couldn't get cookie")
 		e.Render(http.StatusOK, "index", nil)
 	}
