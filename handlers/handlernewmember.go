@@ -51,7 +51,7 @@ func GetNewMemberInfo(e echo.Context) error {
 	GroupID, err := repositories.CompareGroupname(Groepname)
 
 	log.Println("handlernewmember.go:UserID is", UserID)
-	log.Println("handlernewmember.go:UserID is", GroupID)
+	log.Println("handlernewmember.go:GroupID is", GroupID)
 	groups, err := repositories.GetGroup()
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
