@@ -15,6 +15,13 @@
         <option value={{ . }}></option>
         {{end}}
     </datalist>
+    <input list="users">
+    <datalist id="users">
+        {{range  .Users}}
+        <option value={{ . }}></option>
+        {{end}}
+    </datalist>
+    <input type="submit">
 </form>
 </body>
 </html>
