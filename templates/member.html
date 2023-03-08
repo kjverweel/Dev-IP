@@ -12,7 +12,7 @@
     <input list="groups">
     <datalist id="groups">
         {{range  .Groups}}
-        <option value="">{{ . }}</option>
+        <option value={{ . }}></option>
         {{end}}
     </datalist>
 </form>
