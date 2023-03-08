@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"github.com/labstack/echo/v4"
+	"log"
 	"main.go/models"
 	"main.go/repositories"
 	"net/http"
@@ -14,12 +15,12 @@ func Home(e echo.Context) error {
 	// parse cookie string value to uint
 	userId, err := strconv.ParseUint(cookie.Value, 10, 64)
 	if err != nil {
-		panic(err)
+		log.Println("Couldn't get cookie")
 	}
 	user := &models.Users{}
 	err = repositories.GetUser(uint(userId), &user)
 	if err != nil {
-		panic(err)
+		log.Println("Couldn't get cookie")
 	}
 	groups, err := repositories.GetGroup()
 	if err != nil {
