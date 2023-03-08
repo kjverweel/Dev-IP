@@ -62,7 +62,12 @@ func GetNewMemberInfo(e echo.Context) error {
 		GroepID: GroupID,
 	}
 
-	err = repositories.NewMember()
+	err = repositories.NewMember(Groupmembers)
+	if err != nil {
+		log.Println("handlercreategroup.go:Repository got fucked")
+	} else {
+		log.Println("handlercreategroup.go:Succesfully called")
+	}
 
 	//End of the NewMember Code
 	groups, err := repositories.GetGroup()
