@@ -6,9 +6,9 @@ import (
 	"main.go/models"
 )
 
-func GetGroup(groepname string) ([]models.Groups, error) {
+func GetGroup() ([]models.Groups, error) {
 	var groups []models.Groups
-	err := db.Select("groepname", groepname).Error
+	err := db.Find(&groups).Error
 	if err != nil {
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil // return nil if no records found
