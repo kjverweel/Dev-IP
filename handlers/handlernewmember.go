@@ -10,11 +10,14 @@ import (
 )
 
 func GetNewMemberInfo(e echo.Context) error {
+	//Cookiecode
 	// get cookie from request
 	cookie, err := e.Cookie("User")
 	// parse cookie string value to uint
 	userId, err := strconv.ParseUint(cookie.Value, 10, 64)
 	if err != nil {
+		//if an error occurs in Cookiecode this usually means that the user isn't logged in properly.
+		//this e.Render causes a direct to the index page, where you can log in or register an account.
 		log.Println("handlerhome.go:Couldn't get cookie")
 		e.Render(http.StatusOK, "index", nil)
 	}
@@ -23,6 +26,7 @@ func GetNewMemberInfo(e echo.Context) error {
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get cookie")
 	}
+	//end of Cookiecode
 
 	if e.FormValue("UserName") == "" || e.FormValue("GroupName") == "" {
 		return e.Render(http.StatusUnauthorized, "member", nil)
@@ -44,8 +48,10 @@ func GetNewMemberInfo(e echo.Context) error {
 		return err
 	}
 
-	log.Println("handlernewmember.go:UserID is", UserID)
+	GroupID, err := repositories.CompareGroupname(Groepname)
 
+	log.Println("handlernewmember.go:UserID is", UserID)
+	log.Println("handlernewmember.go:GroupID is", GroupID)
 	groups, err := repositories.GetGroup()
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
