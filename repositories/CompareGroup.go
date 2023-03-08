@@ -16,3 +16,7 @@ func CheckGroup(newGroup *models.Groups) (bool, error) {
 	}
 	return true, nil
 }
+
+func CompareGroupname() {
+
+}

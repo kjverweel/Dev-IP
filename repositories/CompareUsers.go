@@ -16,3 +16,14 @@ func CompareUsers(newUser *models.Users) (bool, error) {
 	}
 	return true, nil
 }
+
+func CompareUsername(GetID *models.Users) (int, error) {
+	var UserID int
+	err := db.Where("user_nickname = ?", GetID.UserNickname).First("id", &UserID).Error
+	if err == gorm.ErrRecordNotFound {
+		log.Println("CompareUsers.go:This is a database fault")
+	} else if err != nil {
+		log.Println("CompareUsers.go:Probably couldn't find ID")
+	}
+	return UserID, nil
+}
