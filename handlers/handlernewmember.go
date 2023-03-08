@@ -49,6 +49,10 @@ func GetNewMemberInfo(e echo.Context) error {
 	}
 
 	GroupID, err := repositories.CompareGroupname(Groepname)
+	if err != nil {
+		log.Println("handlernewmember.go:couldn't find matching ID")
+		return err
+	}
 
 	log.Println("handlernewmember.go:UserID is", UserID)
 	log.Println("handlernewmember.go:GroupID is", GroupID)
