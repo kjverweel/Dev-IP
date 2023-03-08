@@ -9,13 +9,13 @@
 <h1>Groep aanmaken</h1>
 <form action="/home" method="post">
     <p>nieuw groepslid</p>
-    <input list="groups">
+    <input list="groups" name="GroupName">
     <datalist id="groups">
         {{range  .Groups}}
         <option value={{ . }}></option>
         {{end}}
     </datalist>
-    <input list="users">
+    <input list="users" name="UserName">
     <datalist id="users">
         {{range  .Users}}
         <option value={{ . }}></option>
