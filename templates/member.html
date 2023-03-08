@@ -1,3 +1,4 @@
+{{define "member"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -5,6 +6,16 @@
     <title>Title</title>
 </head>
 <body>
-
+<h1>Groep aanmaken</h1>
+<form action="/home" method="post">
+    <p>nieuw groepslid</p>
+    <input list="groups">
+    <datalist id="groups">
+        {{range  .Groups}}
+        <option value="">{{ . }}</option>
+        {{end}}
+    </datalist>
+</form>
 </body>
 </html>
+{{end}}
