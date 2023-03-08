@@ -8,8 +8,6 @@ import (
 	"net/http"
 )
 
-func CreateGroup(e echo.Context) error {
-	newGroup := &models.Groups{
 		Groepname:  e.FormValue("Groepsnaam"),
 		Groepadmin: e.FormValue("Adminnaam"),
 	}
