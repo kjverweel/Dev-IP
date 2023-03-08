@@ -27,6 +27,6 @@ func Member(e echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	log.Println("Succesfully made it to /member")
+	log.Println("handlermember.go:Succesfully made it to /member")
 	return nil
 }

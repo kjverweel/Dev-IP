@@ -11,7 +11,7 @@ func Loginscreen(e echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	} else {
-		log.Println("Succesfully made it to login!")
+		log.Println("handlerindex.go:Succesfully made it to login!")
 	}
 	return nil
 }
@@ -21,7 +21,7 @@ func Registerscreen(e echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	} else {
-		log.Println("Succesfully made it to register!")
+		log.Println("handlerlogin.go:Succesfully made it to register!")
 	}
 	return nil
 }

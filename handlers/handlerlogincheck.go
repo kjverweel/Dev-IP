@@ -23,7 +23,7 @@ func Login(e echo.Context) error {
 
 	YouExist := repositories.LoginUser(existingUser)
 	if !YouExist {
-		log.Println("User doesn't exist")
+		log.Println("handlerlogincheck.go:User doesn't exist")
 		return e.Render(http.StatusOK, "login", echo.Map{"UserDoesntExist": "Deze user bestaat niet, probeer opnieuw"})
 	}
 

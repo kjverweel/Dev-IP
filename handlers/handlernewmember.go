@@ -13,8 +13,8 @@ func GetNewMemberInfo(e echo.Context) error {
 
 	UserNickname := e.FormValue("UserName")
 	Groepname := e.FormValue("GroupName")
-	log.Println(UserNickname)
-	log.Println(Groepname)
+	log.Println("handlernewmember.go:", UserNickname)
+	log.Println("handlernewmember.go:", Groepname)
 
 	return nil
 }

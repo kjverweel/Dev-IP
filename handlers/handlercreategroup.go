@@ -15,14 +15,14 @@ func CreateGroup(e echo.Context) error {
 	}
 	GroupExists, err := repositories.CheckGroup(newGroup)
 	if err != nil || GroupExists {
-		log.Println("group already exist or You did fucky")
+		log.Println("handlercreategroup.go:group already exist or You did fucky")
 		return e.Render(http.StatusOK, "groups", echo.Map{"ErrorGroep": "Sorry, deze naam is al in gebruik."})
 	}
 	err = repositories.NewGroup(newGroup)
 	if err != nil {
-		log.Println("Repository got fucked")
+		log.Println("handlercreategroup.go:Repository got fucked")
 	} else {
-		log.Println("Succesfully called")
+		log.Println("handlercreategroup.go:Succesfully called")
 	}
 	return e.Redirect(http.StatusSeeOther, "/home")
 }
