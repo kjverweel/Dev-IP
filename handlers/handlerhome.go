@@ -21,9 +21,16 @@ func Home(e echo.Context) error {
 	if err != nil {
 		panic(err)
 	}
-	groepnames := &models.Groups{}
-	err = repositories.GetGroup(&groepnames)
-	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groepnames.Groepname})
+	groups, err := repositories.GetGroup()
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": "Failed to get groups",
+		})
+	}
+	if groups == nil {
+		e.Render(http.StatusOK, "home", echo.Map{"Groups": "it no worky worky"})
+	}
+	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups})
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
