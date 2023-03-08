@@ -9,6 +9,7 @@ import (
 )
 
 func GetNewMemberInfo(e echo.Context) error {
+
 	if e.FormValue("UserName") == "" || e.FormValue("GroupName") == "" {
 		return e.Render(http.StatusUnauthorized, "member", nil)
 	}
@@ -31,5 +32,18 @@ func GetNewMemberInfo(e echo.Context) error {
 
 	log.Println("handlernewmember.go:UserID is", UserID)
 
+	groups, err := repositories.GetGroup()
+	if err != nil {
+		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+			"message": "Failed to get groups",
+		})
+	}
+	if groups == nil {
+		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet"})
+	}
+	err = e.Render(http.StatusOK, "home", echo.Map{"Groups": groups})
+	if err != nil {
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	}
 	return nil
 }
