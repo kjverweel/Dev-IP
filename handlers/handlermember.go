@@ -21,7 +21,7 @@ func Member(e echo.Context) error {
 		})
 	}
 	if groups == nil {
-		e.Render(http.StatusOK, "home", echo.Map{"Groups": "it no worky worky"})
+		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet"})
 	}
 	err = e.Render(http.StatusOK, "member", echo.Map{"Users": AllUsers})
 	if err != nil {
