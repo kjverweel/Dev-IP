@@ -3,12 +3,11 @@ package repositories
 import (
 	"github.com/jinzhu/gorm"
 	"log"
-	"main.go/models"
 )
 
-func GetGroup() ([]models.Groups, error) {
-	var groups []models.Groups
-	err := db.Find(&groups).Error
+func GetGroup() ([]string, error) {
+	var groups []string
+	err := db.Table("groups").Pluck("DISTINCT groepname", &groups).Error
 	if err != nil {
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil // return nil if no records found
