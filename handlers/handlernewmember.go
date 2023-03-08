@@ -27,7 +27,7 @@ func GetNewMemberInfo(e echo.Context) error {
 		log.Println("handlerhome.go:Couldn't get cookie")
 	}
 	//end of Cookiecode
-
+	//start of the actual NewMember code
 	if e.FormValue("UserName") == "" || e.FormValue("GroupName") == "" {
 		return e.Render(http.StatusUnauthorized, "member", nil)
 	}
@@ -49,9 +49,27 @@ func GetNewMemberInfo(e echo.Context) error {
 	}
 
 	GroupID, err := repositories.CompareGroupname(Groepname)
-
+	if err != nil {
+		log.Println("handlernewmember.go:couldn't find matching ID")
+		return err
+	}
+	//helps confirm that the ID's are correctly pulled from the database
 	log.Println("handlernewmember.go:UserID is", UserID)
 	log.Println("handlernewmember.go:GroupID is", GroupID)
+
+	Groupmembers := &models.Groupmembers{
+		UserID:  UserID,
+		GroepID: GroupID,
+	}
+
+	err = repositories.NewMember(Groupmembers)
+	if err != nil {
+		log.Println("handlercreategroup.go:Repository got fucked")
+	} else {
+		log.Println("handlercreategroup.go:Succesfully called")
+	}
+
+	//End of the NewMember Code
 	groups, err := repositories.GetGroup()
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{

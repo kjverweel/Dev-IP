@@ -5,13 +5,12 @@ import (
 	"main.go/models"
 )
 
-func NewMember(newMember *models.Groupmembers, groups *models.Groups) error {
-
-	err := db.Create(newMember).Error
+func NewMember(Groupmembers *models.Groupmembers) error {
+	err := db.Create(Groupmembers).Error
 	if err != nil {
 		return err
 	} else {
-		log.Println("NewMember.go:Lid is toegevoegd aan de groep")
+		log.Println("NewMembers.go:", Groupmembers, "toegevoegd!")
 	}
 	return nil
 }
