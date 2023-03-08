@@ -8,7 +8,7 @@ import (
 
 func GetGroup(groepname string) ([]models.Groups, error) {
 	var groups []models.Groups
-	err := db.Where("groepname = ?", groepname).Find(&groups).Error
+	err := db.Select("groepname", groepname).Error
 	if err != nil {
 		if gorm.IsRecordNotFoundError(err) {
 			return nil, nil // return nil if no records found
