@@ -62,14 +62,25 @@ func GetNewMemberInfo(e echo.Context) error {
 		GroepID: GroupID,
 	}
 
-	err = repositories.NewMember(Groupmembers)
+	IsMember, err := repositories.CheckGroupMembers(Groupmembers)
 	if err != nil {
-		log.Println("handlercreategroup.go:Repository got fucked")
-	} else {
-		log.Println("handlercreategroup.go:Succesfully called")
+		log.Println("error checking group members:", err)
+		return nil
 	}
-
+	if IsMember == true {
+		log.Println("user is not yet a member of the group")
+		err = repositories.NewMember(Groupmembers)
+		if err != nil {
+			log.Println("handlercreategroup.go:Repository got fucked")
+		} else {
+			log.Println("handlercreategroup.go:Succesfully called")
+		}
+		log.Println("Now he is a member")
+	} else if IsMember == false {
+		log.Println("User is a member and he can fuck off ")
+	}
 	//End of the NewMember Code
+
 	groups, err := repositories.GetGroup()
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
