@@ -1,8 +1,18 @@
 package repositories
 
-import "main.go/models"
+import (
+	"github.com/jinzhu/gorm"
+	"log"
+	"main.go/models"
+)
 
 func CheckGroupMembers(Groupmembers *models.Groupmembers) (bool, error) {
 	err := db.Where("user_id = ?", Groupmembers.UserID, "groep_id = ?", Groupmembers.GroepID).Error
-	return false, nil
+	if err == gorm.ErrRecordNotFound {
+		return false, err
+	} else {
+		log.Println("this is an error")
+	}
+
+	return true, nil
 }
