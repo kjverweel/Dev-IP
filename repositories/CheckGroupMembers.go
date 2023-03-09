@@ -17,7 +17,7 @@ func CheckGroupMembers(Groupmembers *models.Groupmembers) (bool, error) {
 			return true, nil
 		} else {
 			// an error occurred while querying the database
-			log.Println("error checking group members:", err)
+			log.Println("CheckGroupMember.go:error checking group members:", err)
 			return false, err
 		}
 	}

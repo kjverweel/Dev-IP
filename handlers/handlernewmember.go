@@ -64,7 +64,7 @@ func GetNewMemberInfo(e echo.Context) error {
 
 	IsMember, err := repositories.CheckGroupMembers(Groupmembers)
 	if err != nil {
-		log.Println("error checking group members:", err)
+		log.Println("handlernewmember.go:error checking group members:", err)
 		return nil
 	}
 	if IsMember == true {
