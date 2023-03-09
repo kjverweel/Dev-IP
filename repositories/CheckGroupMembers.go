@@ -8,9 +8,10 @@ import (
 )
 
 func CheckGroupMembers(Groupmembers *models.Groupmembers) (bool, error) {
-	var MemberOfGroup models.Groupmembers
-	err := db.Where("user_id = ?", Groupmembers.UserID).Where("groep_id = ?", Groupmembers.GroepID).First(&MemberOfGroup).Error
+	var member models.Groupmembers
+	err := db.Where("user_id = ?", Groupmembers.UserID).Where("groep_id = ?", Groupmembers.GroepID).First(&member).Error
 	if err != nil {
+		log.Println(member)
 		if errors.Is(err, gorm.ErrRecordNotFound) {
 			// no matching record found, the user is not yet a member of the group
 			return true, nil
@@ -20,7 +21,6 @@ func CheckGroupMembers(Groupmembers *models.Groupmembers) (bool, error) {
 			return false, err
 		}
 	}
-
 	// a matching record was found, the user is already a member of the group
 	return false, errors.New("user is already a member of the group")
 }
