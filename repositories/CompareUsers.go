@@ -22,10 +22,10 @@ func CompareUsername(GetID *models.Users) (int, error) {
 	err := db.Model(&models.Users{}).Select("id").Where("user_nickname = ?", GetID.UserNickname).Scan(&UserID).Error
 	if err == gorm.ErrRecordNotFound {
 		log.Println("CompareUsers.go:This is a database fault")
-		return 0, err
+		return 0000, err
 	} else if err != nil {
 		log.Println("CompareUsers.go:Probably couldn't find ID")
-		return 0, err
+		return 0000, err
 	}
 	return UserID, nil
 }
