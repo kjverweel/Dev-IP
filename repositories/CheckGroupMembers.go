@@ -1,26 +1,21 @@
 package repositories
 
 import (
-	"errors"
-	"github.com/jinzhu/gorm"
 	"log"
 	"main.go/models"
 )
 
 func CheckGroupMembers(Groupmembers *models.Groupmembers) (bool, error) {
 	var member models.Groupmembers
-	err := db.Where("user_id = ?", Groupmembers.UserID).Where("groep_id = ?", Groupmembers.GroepID).First(&member).Error
+	err := db.Where("user_id = ?", Groupmembers.UserID, "group_id", Groupmembers.GroepID).First(&member).Error
+	log.Println(member)
 	if err != nil {
-		log.Println(member)
-		if errors.Is(err, gorm.ErrRecordNotFound) {
-			// no matching record found, the user is not yet a member of the group
-			return true, nil
-		} else {
-			// an error occurred while querying the database
-			log.Println("CheckGroupMember.go:error checking group members:", err)
-			return false, err
+		return false, nil
+		if err.Error() == "record not found" {
+			return false, nil
 		}
+		log.Println("Error querying database:", err)
+		return false, err
 	}
-	// a matching record was found, the user is already a member of the group
-	return false, errors.New("user is already a member of the group")
+	return true, nil
 }
