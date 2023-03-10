@@ -7,15 +7,11 @@ import (
 
 func CheckGroupMembers(Groupmembers *models.Groupmembers) (bool, error) {
 	var member models.Groupmembers
-	err := db.Where("user_id = ?", Groupmembers.UserID, "group_id", Groupmembers.GroepID).First(&member).Error
+	err := db.Where("user_id = ?", Groupmembers.UserID).Where("groep_id", Groupmembers.GroepID).First(&member).Error
 	log.Println(member)
 	if err != nil {
-		return false, nil
-		if err.Error() == "record not found" {
-			return false, nil
-		}
-		log.Println("Error querying database:", err)
-		return false, err
+		log.Println("checkgroupmembers:", err)
+		return true, nil
 	}
-	return true, nil
+	return false, nil
 }
