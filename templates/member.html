@@ -5,17 +5,20 @@
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
+<nav>
+    <a href="/home">Home</a>
+</nav>
 <body>
-<h1>Groep aanmaken</h1>
+<h1>Lid toevoegen aan groep</h1>
 <form action="/home" method="post">
     <p>nieuw groepslid</p>
-    <input list="groups" name="GroupName" required>
+    <input placeholder="Groepsnaam" list="groups" name="GroupName" required>
     <datalist id="groups">
         {{range  .Groups}}
         <option value={{ . }}></option>
         {{end}}
     </datalist>
-    <input list="users" name="UserName" required>
+    <input placeholder="Username" list="users" name="UserName" required>
     <datalist id="users">
         {{range  .Users}}
         <option value={{ . }}></option>
