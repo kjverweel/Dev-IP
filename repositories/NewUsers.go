@@ -10,7 +10,7 @@ func NewUsers(newUser *models.Users) error {
 	if err != nil {
 		return err
 	} else {
-		log.Println("User is aangemaakt :D")
+		log.Println("NewUsers.go:User is aangemaakt :D")
 	}
 	return nil
 }

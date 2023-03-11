@@ -14,6 +14,10 @@ func GetGroup() ([]string, error) {
 		}
 		return nil, err
 	}
-	log.Println(groups)
+	if groups == nil {
+		log.Println("GetGroups.go:groups is empty")
+	} else {
+		log.Println("GetGroups.go:Groups succesfully called")
+	}
 	return groups, nil
 }

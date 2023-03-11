@@ -11,6 +11,6 @@ func Groups(e echo.Context) error {
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	log.Println("Succesfully made it to /groups")
+	log.Println("handlergroups.go:Succesfully made it to /groups")
 	return nil
 }

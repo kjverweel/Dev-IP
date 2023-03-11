@@ -13,8 +13,9 @@
 <form action="/login" method="post">
 <p>gebruikersnaam</p>
 <input type="text" placeholder="Username/Email" name="Username">{{.UserDoesntExist}}
+    <!--inloggen met email werkt niet nerd, deze logica zit er niet in-->
 <p>wachtwoord</p>
-<input type="text" placeholder="Password" name="Password">
+<input type="password" placeholder="Password" name="Password">
     <input type="submit" value="login">
 </form>
 </body>

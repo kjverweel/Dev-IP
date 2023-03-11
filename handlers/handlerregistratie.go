@@ -18,15 +18,15 @@ func Register(e echo.Context) error {
 	}
 	YouHere, err := repositories.CompareUsers(newUser)
 	if err != nil || YouHere {
-		log.Println("User already exist or You did fucky")
+		log.Println("handlerregstratie.go:User already exist or You did fucky")
 		return e.Render(http.StatusOK, "register", echo.Map{"NuhUh": "Deze user bestaat al, wees origineel"})
 
 	}
 	err = repositories.NewUsers(newUser)
 	if err != nil {
-		log.Println("Repository got fucked")
+		log.Println("handlerregstratie.go:Repository got fucked")
 	} else {
-		log.Println("Succesfully called")
+		log.Println("handlerregstratie.go:Succesfully called")
 	}
 	e.SetCookie(&http.Cookie{
 		Expires: time.Now().Add(time.Hour * 999),

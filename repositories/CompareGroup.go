@@ -12,7 +12,20 @@ func CheckGroup(newGroup *models.Groups) (bool, error) {
 	if err == gorm.ErrRecordNotFound {
 		return false, nil
 	} else if err != nil {
-		log.Println("This is where it go wrong wrong")
+		log.Println("CompareGroup.go:This is where it go wrong wrong")
 	}
 	return true, nil
+}
+
+func CompareGroupname(GetID *models.Groups) (int, error) {
+	var GroupID int
+	err := db.Model(&models.Groups{}).Select("id").Where("groepname = ?", GetID.Groepname).Scan(&GroupID).Error
+	if err == gorm.ErrRecordNotFound {
+		log.Println("CompareUsers.go:This is a database fault")
+		return 0000, err
+	} else if err != nil {
+		log.Println("CompareUsers.go:Probably couldn't find ID")
+		return 0000, err
+	}
+	return GroupID, nil
 }

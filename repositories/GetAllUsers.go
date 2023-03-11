@@ -14,6 +14,6 @@ func GetAllUsers() ([]string, error) {
 		}
 		return nil, err
 	}
-	log.Println(AllUsers)
+	log.Println("GetAllUsers.go:", AllUsers)
 	return AllUsers, nil
 }

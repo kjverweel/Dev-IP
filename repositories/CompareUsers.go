@@ -12,7 +12,20 @@ func CompareUsers(newUser *models.Users) (bool, error) {
 	if err == gorm.ErrRecordNotFound {
 		return false, nil
 	} else if err != nil {
-		log.Println("This is where it go wrong wrong")
+		log.Println("CompareUsers.go:This is where it go wrong wrong")
 	}
 	return true, nil
+}
+
+func CompareUsername(GetID *models.Users) (int, error) {
+	var UserID int
+	err := db.Model(&models.Users{}).Select("id").Where("user_nickname = ?", GetID.UserNickname).Scan(&UserID).Error
+	if err == gorm.ErrRecordNotFound {
+		log.Println("CompareUsers.go:This is a database fault")
+		return 0000, err
+	} else if err != nil {
+		log.Println("CompareUsers.go:Probably couldn't find ID")
+		return 0000, err
+	}
+	return UserID, nil
 }
