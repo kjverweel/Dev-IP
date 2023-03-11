@@ -54,6 +54,13 @@ func CreateNewPost(e echo.Context) error {
 
 	log.Println(Post)
 
+	err = repositories.NewPost(Post)
+	if err != nil {
+		log.Println("you done fucked up now boi")
+	} else {
+		log.Println("Succes!")
+	}
+
 	return nil
 
 }
