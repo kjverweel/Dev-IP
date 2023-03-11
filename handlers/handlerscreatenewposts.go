@@ -15,10 +15,10 @@ func CreateNewPost(e echo.Context) error {
 
 	GroupID, err := repositories.CompareGroupname(Groepname)
 	if err != nil {
-		log.Println("handlernewmember.go:couldn't find matching ID")
+		log.Println("handlercreatenewpost.go:couldn't find matching ID")
 		return err
 	}
-	log.Println("handlernewmember.go:GroupID is", GroupID)
+	log.Println("handlercreatenewpost.go:GroupID is", GroupID)
 	return nil
 
 }
