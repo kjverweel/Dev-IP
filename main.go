@@ -30,6 +30,7 @@ func main() {
 	e.POST("/home", handlers.CreateGroup)
 	e.GET("/member", handlers.Member)
 	e.POST("/member", handlers.GetNewMemberInfo)
+	e.GET("/newpost", handlers.Posts)
 	if err := e.Start(":1325"); err != nil {
 		log.Println("Error starting the server: ", err)
 	}
