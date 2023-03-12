@@ -5,8 +5,8 @@ import (
 	"main.go/models"
 )
 
-func GetRecentPosts() ([]string, error) {
-	var recentPostContents []string
+func GetRecentPosts() ([][]string, error) {
+	var recentPostContents [][]string
 
 	for i := 0; i < 8; i++ {
 		var post models.Posts
@@ -15,7 +15,7 @@ func GetRecentPosts() ([]string, error) {
 		if result.Error != nil {
 			return nil, result.Error
 		}
-		recentPostContents = append(recentPostContents, post.PostContent)
+		recentPostContents = append(recentPostContents, []string{post.PostContent})
 	}
 	log.Println(recentPostContents)
 	return recentPostContents, nil
