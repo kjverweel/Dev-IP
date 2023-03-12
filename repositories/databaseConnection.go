@@ -4,6 +4,7 @@ import (
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
 	"log"
+	"main.go/models"
 )
 
 var db *gorm.DB
@@ -17,11 +18,11 @@ func DatabaseConnection() {
 	} else {
 		log.Println("databaseConnection.go:Database succesfully done diggery doo")
 	}
-	//err = db.AutoMigrate(&models.Users{}, &models.Posts{}, &models.Groups{}, &models.Comments{}, &models.Likes{}, &models.Groupmembers{})
-	//if err != nil {
-	//	log.Println("You did a fucky wucky senpai san")
-	//} else {
-	//	log.Println("migrations complete")
-	//}
+	err = db.AutoMigrate(&models.Users{}, &models.Posts{}, &models.Groups{}, &models.Comments{}, &models.Likes{}, &models.Groupmembers{})
+	if err != nil {
+		log.Println("You did a fucky wucky senpai san")
+	} else {
+		log.Println("migrations complete")
+	}
 
 }

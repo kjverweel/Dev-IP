@@ -12,12 +12,15 @@
 <h1>Welkom op Kurtstagram {{.Nem}}</h1>
 
 <a href="/groups">Groep aanmaken</a>
-<a href="/member">Voeg leden toe aan groep</a>
+<a href="/member">Voeg leden toe aan groep</a><br>
+<a href="/newpost">Maak een nieuwe post</a>
 
 <h1>Dit zijn alle Groepen :)</h1>
 {{range  .Groups}}
 <li>{{ . }}</li>
 {{end}}
+
+{{.RecentPosts}}
 
 </body>
 </html>

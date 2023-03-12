@@ -1,10 +1,28 @@
+{{define "newpost"}}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>New Posts</title>
 </head>
+<nav>
+    <a href="/home">Home</a>
+</nav>
 <body>
+<h1>Nieuwe post</h1>
+<form action="/newpost" enctype="multipart/form-data" method="post">
+    <p>groep</p>
+    <input placeholder="Groepsnaam" list="groups" name="GroupName" required>
+    <datalist id="groups">
+        {{range  .Groups}}
+        <option value={{ . }}></option>
+        {{end}}
+    </datalist><br>
+    <input type="file" name="Image" required><br>
+    <input type="text" name="PostContent" required>
+    <input type="submit" value="Create Post" required>
+</form>
 
 </body>
 </html>
+{{end}}
