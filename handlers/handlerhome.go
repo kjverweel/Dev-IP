@@ -37,7 +37,7 @@ func Home(e echo.Context) error {
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get recents posts")
 	}
-	log.Println(RecentPosts)
+	log.Println("handlerhome:", RecentPosts)
 
 	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups, "RecentPosts": RecentPosts})
 	if err != nil {

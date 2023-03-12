@@ -5,17 +5,18 @@ import (
 	"main.go/models"
 )
 
-func GetRecentPosts() ([]models.Posts, error) {
-	var recentPosts []models.Posts
+func GetRecentPosts() ([]string, error) {
+	var recentPostContents []string
 
 	for i := 0; i < 8; i++ {
 		var post models.Posts
 		result := db.Table("Posts").Select("post_content").Order("created_at desc").Limit(1).Offset(i).Find(&post)
+		log.Println("getpost.go:", result)
 		if result.Error != nil {
 			return nil, result.Error
 		}
-		recentPosts = append(recentPosts, post)
+		recentPostContents = append(recentPostContents, post.PostContent)
 	}
-	log.Println(recentPosts)
-	return recentPosts, nil
+	log.Println(recentPostContents)
+	return recentPostContents, nil
 }
