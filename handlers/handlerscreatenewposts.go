@@ -31,12 +31,14 @@ func CreateNewPost(e echo.Context) error {
 	if err != nil {
 		log.Println("handlercreatenewpost.go:Couldn't get cookie")
 	}
+
 	log.Println(user)
 	//end of Cookiecode
 	//takes the name of the group
 	Groepname := &models.Groups{
 		Groepname: e.FormValue("GroupName"),
 	}
+
 	log.Println(Groepname)
 	//query's the groupname into the database to find the ID
 	GroupID, err := repositories.CompareGroupname(Groepname)
