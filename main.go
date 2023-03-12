@@ -11,6 +11,9 @@ import (
 
 func main() {
 	e := echo.New()
+
+	e.Static("/uploads", "uploads")
+
 	tpl, err := template.ParseGlob("./templates/*html")
 	if err != nil {
 		log.Println("Error loading templates: ", err)
