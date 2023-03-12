@@ -1,7 +1,9 @@
 package models
 
+import "gorm.io/gorm"
+
 type Posts struct {
-	PostID      int `gorm:"primaryKey"`
+	gorm.Model
 	GroepID     int
 	PostContent string `gorm:"type:varchar(1000)"`
 	UserID      int

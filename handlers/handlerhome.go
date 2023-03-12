@@ -32,6 +32,7 @@ func Home(e echo.Context) error {
 	if groups == nil {
 		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet"})
 	}
+
 	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups})
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
