@@ -21,7 +21,10 @@ func CreateNewPost(e echo.Context) error {
 		//if an error occurs in Cookiecode this usually means that the user isn't logged in properly.
 		//this e.Render causes a direct to the index page, where you can log in or register an account.
 		log.Println("handlercreatenewpost.go:Couldn't get cookie")
-		e.Render(http.StatusOK, "index", nil)
+		err := e.Render(http.StatusOK, "index", nil)
+		if err != nil {
+			return err
+		}
 	}
 
 	//take userid for laters
@@ -40,6 +43,7 @@ func CreateNewPost(e echo.Context) error {
 	}
 
 	log.Println(Groepname)
+
 	//query's the groupname into the database to find the ID
 	GroupID, err := repositories.CompareGroupname(Groepname)
 	if err != nil {
