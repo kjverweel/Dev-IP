@@ -6,7 +6,6 @@ import (
 	"log"
 	"main.go/models"
 	"main.go/repositories"
-	"mime/multipart"
 	"net/http"
 	"os"
 	"strconv"
@@ -67,25 +66,19 @@ func CreateNewPost(e echo.Context) error {
 		// Return a 500 Internal Server Error to the client if there was an error opening the file.
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	defer func(src multipart.File) {
-		err := src.Close()
-		if err != nil {
-
-		}
-	}(src)
+	defer src.Close()
 
 	// Destination
-	dst, err := os.Create("static" + file.Filename)
+	dst, err := os.Create("./uploads/" + filename)
+
+	if err == nil {
+		log.Println("THIS BETTER FUCKING WORK")
+	}
 	if err != nil {
 		// Return a 500 Internal Server Error to the client if there was an error creating the file.
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	defer func(dst *os.File) {
-		err := dst.Close()
-		if err != nil {
-
-		}
-	}(dst)
+	defer src.Close()
 
 	if _, err := io.Copy(dst, src); err != nil {
 		// Return a 500 Internal Server Error to the client if there was an error copying the contents of the file.

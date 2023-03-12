@@ -10,7 +10,7 @@
 </nav>
 <body>
 <h1>Nieuwe post</h1>
-<form action="/newpost" method="post">
+<form action="/newpost" enctype="multipart/form-data" method="post">
     <p>groep</p>
     <input placeholder="Groepsnaam" list="groups" name="GroupName" required>
     <datalist id="groups">
