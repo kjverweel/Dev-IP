@@ -70,7 +70,6 @@ func CreateNewPost(e echo.Context) error {
 
 	// Destination
 	dst, err := os.Create("./uploads/" + filename)
-
 	if err == nil {
 		log.Println("THIS BETTER FUCKING WORK")
 	}
@@ -86,9 +85,9 @@ func CreateNewPost(e echo.Context) error {
 	}
 
 	filelocation := "./uploads/" + filename
-
 	log.Println(filelocation)
 
+	//data uploaded to the database
 	Post := &models.Posts{
 		PostContent:       e.FormValue("PostContent"),
 		UserID:            int(userID),
@@ -96,15 +95,13 @@ func CreateNewPost(e echo.Context) error {
 		PostImageLocation: filelocation,
 	}
 
-	log.Println(Post)
-
+	log.Println(Post) //for confirmation the correct data was passed
+	//appends the function that uploads the data to the database
 	err = repositories.NewPost(Post)
 	if err != nil {
 		log.Println("you done fucked up now boi")
 	} else {
 		log.Println("Succes!")
 	}
-
 	return e.Redirect(http.StatusSeeOther, "/home")
-
 }
