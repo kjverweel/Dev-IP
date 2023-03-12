@@ -55,6 +55,8 @@ func CreateNewPost(e echo.Context) error {
 	log.Println("handlercreatenewpost.go:GroupID is", GroupID)
 
 	file, err := e.FormFile("Image")
+	filename := file.Filename
+	log.Println("filename: ", filename)
 
 	if err != nil {
 		// Return a 400 Bad Request error to the client if no file was uploaded or if there was an error parsing the form data.
@@ -73,7 +75,7 @@ func CreateNewPost(e echo.Context) error {
 	}(src)
 
 	// Destination
-	dst, err := os.Create("static/" + file.Filename)
+	dst, err := os.Create("static" + file.Filename)
 	if err != nil {
 		// Return a 500 Internal Server Error to the client if there was an error creating the file.
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
