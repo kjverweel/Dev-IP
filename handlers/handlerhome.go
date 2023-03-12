@@ -33,7 +33,13 @@ func Home(e echo.Context) error {
 		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet"})
 	}
 
-	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups})
+	RecentPosts, err := repositories.GetRecentPosts()
+	if err != nil {
+		log.Println("handlerhome.go:Couldn't get recents posts")
+	}
+	log.Println(RecentPosts)
+
+	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups, "RecentPosts": RecentPosts})
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
