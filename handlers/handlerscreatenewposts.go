@@ -85,10 +85,15 @@ func CreateNewPost(e echo.Context) error {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
+	filelocation := "./uploads/" + filename
+
+	log.Println(filelocation)
+
 	Post := &models.Posts{
-		PostContent: e.FormValue("PostContent"),
-		UserID:      int(userID),
-		GroepID:     GroupID,
+		PostContent:       e.FormValue("PostContent"),
+		UserID:            int(userID),
+		GroepID:           GroupID,
+		PostImageLocation: filelocation,
 	}
 
 	log.Println(Post)
