@@ -23,5 +23,6 @@ func GetRecentPosts() ([][]string, error) {
 		}
 		recentPostContents = append(recentPostContents, []string{post.PostContent})
 	}
+
 	return recentPostContents, nil
 }
