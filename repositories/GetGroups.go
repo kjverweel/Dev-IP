@@ -3,6 +3,7 @@ package repositories
 import (
 	"github.com/jinzhu/gorm"
 	"log"
+	"main.go/models"
 )
 
 func GetGroup() ([]string, error) {
@@ -20,4 +21,18 @@ func GetGroup() ([]string, error) {
 		log.Println("GetGroups.go:Groups succesfully called")
 	}
 	return groups, nil
+}
+
+func GetLatestGroup() int {
+	var latestGroup int
+	err := db.Model(&models.Groups{}).Select("id").Table("groups").Order("created_at desc").First(&latestGroup).Error
+	if err != nil {
+		return 0
+	}
+	if latestGroup == 0 {
+		log.Println("GetLatestGroup.go: no group found")
+	} else {
+		log.Println("GetLatestGroup.go: Group found")
+	}
+	return latestGroup
 }

@@ -24,7 +24,12 @@
         <option value={{ . }}></option>
         {{end}}
     </datalist>
-    <input type="submit" value="New Member"> {{.Admin_Message}}
+    <input placeholder="Admin" list="AdminYesNo" name="Admin" required>
+    <datalist id="AdminYesNo">
+        <option value="Wel Admin"></option>
+        <option value="Geen Admin"></option>
+    </datalist>
+    <input type="submit" value="New Member"> {{.Admin_message}}
 </form>
 </body>
 </html>

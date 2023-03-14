@@ -5,13 +5,12 @@ import (
 	"main.go/models"
 )
 
-func CheckGroupMembers(Groupmembers *models.Groupmembers) (bool, error) {
+func CheckGroupMembers(UserID int, GroupID int) (bool, error) {
 	var member models.Groupmembers
-	err := db.Where("user_id = ?", Groupmembers.UserID).Where("groep_id", Groupmembers.GroepID).First(&member).Error
-	log.Println(member)
+	err := db.Where("user_id = ? AND groep_id = ?", UserID, GroupID).First(&member).Error
 	if err != nil {
 		log.Println("checkgroupmembers:", err)
-		return true, nil
+		return false, nil
 	}
-	return false, nil
+	return true, nil
 }
