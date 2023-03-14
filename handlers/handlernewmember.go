@@ -23,6 +23,8 @@ func GetNewMemberInfo(e echo.Context) error {
 	}
 	user := &models.Users{}
 	err = repositories.GetUser(uint(userId), &user)
+	AdminID := strconv.FormatUint(userId, 10)
+	log.Println(AdminID)
 	if err != nil {
 		log.Println("Handlernewmember.go:Couldn't get cookie")
 	}
@@ -30,6 +32,17 @@ func GetNewMemberInfo(e echo.Context) error {
 	//start of the actual NewMember code
 	if e.FormValue("UserName") == "" || e.FormValue("GroupName") == "" {
 		return e.Render(http.StatusUnauthorized, "member", nil)
+	}
+
+	CheckForAdmin := models.Groups{
+		Groepname:    e.FormValue("GroepName"),
+		GroepadminID: AdminID,
+	}
+	IsAdmin, err := repositories.IsAnAdmin(CheckForAdmin)
+	if IsAdmin == false {
+
+	} else if IsAdmin == true {
+
 	}
 
 	Usernickname := &models.Users{
@@ -90,16 +103,17 @@ func GetNewMemberInfo(e echo.Context) error {
 
 	RecentPosts, err := repositories.GetRecentPosts()
 	if err != nil {
-		log.Println("handlerhome.go:Couldn't get recents posts")
+		log.Println("handlernewmember.go:Couldn't get recents posts")
 	}
-	log.Println("handlerhome:", RecentPosts)
+	log.Println("handlernewmember.go:", RecentPosts)
 
 	if groups == nil {
 		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet", "RecentPosts": RecentPosts})
-	}
-	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups})
-	if err != nil {
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+	} else {
+		err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups, "RecentPosts": RecentPosts})
+		if err != nil {
+			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+		}
 	}
 	return nil
 }

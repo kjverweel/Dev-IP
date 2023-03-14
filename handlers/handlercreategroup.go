@@ -24,7 +24,7 @@ func CreateGroup(e echo.Context) error {
 	user := &models.Users{}
 	err = repositories.GetUser(uint(userId), &user)
 	AdminID := strconv.FormatUint(userId, 10)
-	log.Println(AdminID)
+	log.Println("Handlercreategroup.go:", AdminID)
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get cookie")
 	}
@@ -33,6 +33,7 @@ func CreateGroup(e echo.Context) error {
 		Groepname:    e.FormValue("Groepsnaam"),
 		GroepadminID: AdminID,
 	}
+
 	GroupExists, err := repositories.CheckGroup(newGroup)
 	if err != nil || GroupExists {
 		log.Println("handlercreategroup.go:group already exist or You did fucky")
