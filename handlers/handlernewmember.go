@@ -87,8 +87,15 @@ func GetNewMemberInfo(e echo.Context) error {
 			"message": "Failed to get groups",
 		})
 	}
+
+	RecentPosts, err := repositories.GetRecentPosts()
+	if err != nil {
+		log.Println("handlerhome.go:Couldn't get recents posts")
+	}
+	log.Println("handlerhome:", RecentPosts)
+
 	if groups == nil {
-		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet"})
+		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet", "RecentPosts": RecentPosts})
 	}
 	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups})
 	if err != nil {
