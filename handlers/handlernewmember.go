@@ -24,7 +24,7 @@ func GetNewMemberInfo(e echo.Context) error {
 	user := &models.Users{}
 	err = repositories.GetUser(uint(userId), &user)
 	if err != nil {
-		log.Println("handlerhome.go:Couldn't get cookie")
+		log.Println("Handlernewmember.go:Couldn't get cookie")
 	}
 	//end of Cookiecode
 	//start of the actual NewMember code
