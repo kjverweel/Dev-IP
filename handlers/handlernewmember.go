@@ -50,9 +50,9 @@ func GetNewMemberInfo(e echo.Context) error {
 			log.Println("UwU")
 		}
 		Admin_message := "Je bent geen admin van deze groep, je kan geen users toevoegen."
-		RecentPosts, err := repositories.GetRecentPosts()
 		groups, err := repositories.GetGroup()
-		return e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups, "RecentPosts": RecentPosts, "Admin_Message": Admin_message})
+		AllUsers, err := repositories.GetAllUsers()
+		err = e.Render(http.StatusOK, "member", echo.Map{"Users": AllUsers, "Groups": groups, "Admin_Message": Admin_message})
 	} else if IsAdmin == 1 {
 		Usernickname := &models.Users{
 			UserNickname: e.FormValue("UserName"),
