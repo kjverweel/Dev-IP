@@ -40,80 +40,79 @@ func GetNewMemberInfo(e echo.Context) error {
 	}
 	IsAdmin, err := repositories.IsAnAdmin(CheckForAdmin)
 	if IsAdmin == false {
-
+		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	} else if IsAdmin == true {
+		Usernickname := &models.Users{
+			UserNickname: e.FormValue("UserName"),
+		}
+		Groepname := &models.Groups{
+			Groepname: e.FormValue("GroupName"),
+		}
 
-	}
+		log.Println("handlernewmember.go:", Usernickname)
+		log.Println("handlernewmember.go:", Groepname)
 
-	Usernickname := &models.Users{
-		UserNickname: e.FormValue("UserName"),
-	}
-	Groepname := &models.Groups{
-		Groepname: e.FormValue("GroupName"),
-	}
-
-	log.Println("handlernewmember.go:", Usernickname)
-	log.Println("handlernewmember.go:", Groepname)
-
-	UserID, err := repositories.CompareUsername(Usernickname)
-	if err != nil {
-		log.Println("handlernewmember.go:couldn't find matching ID")
-		return err
-	}
-
-	GroupID, err := repositories.CompareGroupname(Groepname)
-	if err != nil {
-		log.Println("handlernewmember.go:couldn't find matching ID")
-		return err
-	}
-	//helps confirm that the ID's are correctly pulled from the database
-	log.Println("handlernewmember.go:UserID is", UserID)
-	log.Println("handlernewmember.go:GroupID is", GroupID)
-
-	Groupmembers := &models.Groupmembers{
-		UserID:  UserID,
-		GroepID: GroupID,
-	}
-
-	IsMember, err := repositories.CheckGroupMembers(Groupmembers)
-	if err != nil {
-		log.Println("handlernewmember.go:error checking group members:", err)
-		return nil
-	}
-	if IsMember == true {
-		log.Println("user is not yet a member of the group")
-		err = repositories.NewMember(Groupmembers)
+		UserID, err := repositories.CompareUsername(Usernickname)
 		if err != nil {
-			log.Println("handlercreategroup.go:Repository got fucked")
+			log.Println("handlernewmember.go:couldn't find matching ID")
+			return err
+		}
+
+		GroupID, err := repositories.CompareGroupname(Groepname)
+		if err != nil {
+			log.Println("handlernewmember.go:couldn't find matching ID")
+			return err
+		}
+		//helps confirm that the ID's are correctly pulled from the database
+		log.Println("handlernewmember.go:UserID is", UserID)
+		log.Println("handlernewmember.go:GroupID is", GroupID)
+
+		Groupmembers := &models.Groupmembers{
+			UserID:  UserID,
+			GroepID: GroupID,
+		}
+
+		IsMember, err := repositories.CheckGroupMembers(Groupmembers)
+		if err != nil {
+			log.Println("handlernewmember.go:error checking group members:", err)
+			return nil
+		}
+		if IsMember == true {
+			log.Println("user is not yet a member of the group")
+			err = repositories.NewMember(Groupmembers)
+			if err != nil {
+				log.Println("handlercreategroup.go:Repository got fucked")
+			} else {
+				log.Println("handlercreategroup.go:Succesfully called")
+			}
+			log.Println("Now he is a member")
+		} else if IsMember == false {
+			log.Println("User is a member and he can fuck off ")
+		}
+		//End of the NewMember Code
+
+		groups, err := repositories.GetGroup()
+		if err != nil {
+			return e.JSON(http.StatusInternalServerError, map[string]interface{}{
+				"message": "Failed to get groups",
+			})
+		}
+
+		RecentPosts, err := repositories.GetRecentPosts()
+		if err != nil {
+			log.Println("handlernewmember.go:Couldn't get recents posts")
+		}
+		log.Println("handlernewmember.go:", RecentPosts)
+
+		if groups == nil {
+			e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet", "RecentPosts": RecentPosts})
 		} else {
-			log.Println("handlercreategroup.go:Succesfully called")
-		}
-		log.Println("Now he is a member")
-	} else if IsMember == false {
-		log.Println("User is a member and he can fuck off ")
-	}
-	//End of the NewMember Code
-
-	groups, err := repositories.GetGroup()
-	if err != nil {
-		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
-			"message": "Failed to get groups",
-		})
-	}
-
-	RecentPosts, err := repositories.GetRecentPosts()
-	if err != nil {
-		log.Println("handlernewmember.go:Couldn't get recents posts")
-	}
-	log.Println("handlernewmember.go:", RecentPosts)
-
-	if groups == nil {
-		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet", "RecentPosts": RecentPosts})
-	} else {
-		err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups, "RecentPosts": RecentPosts})
-		if err != nil {
-			return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+			err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups, "RecentPosts": RecentPosts})
+			if err != nil {
+				return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
+			}
 		}
 	}
+
 	return nil
 }
