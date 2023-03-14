@@ -23,25 +23,37 @@ func GetNewMemberInfo(e echo.Context) error {
 	}
 	user := &models.Users{}
 	err = repositories.GetUser(uint(userId), &user)
-	AdminID := strconv.FormatUint(userId, 10)
-	log.Println(AdminID)
 	if err != nil {
-		log.Println("Handlernewmember.go:Couldn't get cookie")
+		log.Println("couldn't get id")
+	} else {
+		log.Println("UwU")
 	}
 	//end of Cookiecode
 	//start of the actual NewMember code
 	if e.FormValue("UserName") == "" || e.FormValue("GroupName") == "" {
 		return e.Render(http.StatusUnauthorized, "member", nil)
 	}
-
 	CheckForAdmin := models.Groups{
-		Groepname:    e.FormValue("GroepName"),
-		GroepadminID: AdminID,
+		Groepname:    e.FormValue("GroupName"),
+		GroepadminID: strconv.FormatUint(userId, 10),
 	}
-	IsAdmin, err := repositories.IsAnAdmin(CheckForAdmin)
-	if IsAdmin == false {
-		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
-	} else if IsAdmin == true {
+	log.Println("CheckForAdminVAR:", CheckForAdmin)
+	IsAdmin, err := repositories.IsAnAdmin(&CheckForAdmin)
+	if err != nil {
+		log.Println("HandlerNewMember.go: it stops working here")
+	}
+	log.Println("IsAdmin:", IsAdmin)
+	if IsAdmin == 0 {
+		log.Println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+		err := e.Redirect(http.StatusUnauthorized, "/home")
+		if err != nil {
+			log.Println("UwU")
+		}
+		Admin_message := "Je bent geen admin van deze groep, je kan geen users toevoegen."
+		RecentPosts, err := repositories.GetRecentPosts()
+		groups, err := repositories.GetGroup()
+		return e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups, "RecentPosts": RecentPosts, "Admin_Message": Admin_message})
+	} else if IsAdmin == 1 {
 		Usernickname := &models.Users{
 			UserNickname: e.FormValue("UserName"),
 		}

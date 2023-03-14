@@ -1,22 +1,20 @@
 package repositories
 
 import (
-	"log"
+	"github.com/jinzhu/gorm"
 	"main.go/models"
 )
 
-func IsAnAdmin(CheckForAdmin models.Groups) (bool, error) {
-	var IsAdmin bool
-	err := db.Where("groepname = ? AND groepadmin_id = ?", CheckForAdmin.Groepname, CheckForAdmin.GroepadminID).First(&IsAdmin)
-	log.Println(IsAdmin)
-	if err != nil {
-		log.Println("Checkadmin.go: Something doesn't work")
-		return false, nil
+func IsAnAdmin(CheckForAdmin *models.Groups) (int, error) {
+	var IsAdmin string
+	err := db.Model(&models.Groups{}).Where("groepname = ? AND groepadmin_id = ?", CheckForAdmin.Groepname, CheckForAdmin.GroepadminID).Pluck("groepadmin_id", &IsAdmin).Error
+	if err == gorm.ErrRecordNotFound {
+		return 0, err
 	}
-	if IsAdmin == true {
-		return true, nil
-	} else if IsAdmin == false {
-		return false, nil
+	if IsAdmin == "" {
+		return 0, nil
+	} else if IsAdmin == CheckForAdmin.GroepadminID {
+		return 1, nil
 	}
-	return false, nil
+	return 0, nil
 }
