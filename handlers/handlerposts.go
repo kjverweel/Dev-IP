@@ -9,7 +9,6 @@ import (
 
 func Posts(e echo.Context) error {
 	groups, err := repositories.GetGroup()
-	log.Println("handlerposts.go:", groups)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Failed to get groups",

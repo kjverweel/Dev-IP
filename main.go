@@ -32,7 +32,7 @@ func main() {
 	e.GET("/groups", handlers.Groups)
 	e.POST("/groups", handlers.CreateGroup)
 	e.GET("/member", handlers.Member)
-	e.POST("/home", handlers.GetNewMemberInfo)
+	e.POST("/member", handlers.GetNewMemberInfo)
 	e.GET("/newpost", handlers.Posts)
 	e.POST("/newpost", handlers.CreateNewPost)
 	if err := e.Start(":1325"); err != nil {
