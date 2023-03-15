@@ -26,7 +26,7 @@
     {{if ne (index . 1) ""}}
     <!--als Index . 1 (index . 1 is de image location) niet gelijk is aan "" (een lege string), zet dan Index . 1 in de src-->
     <img src="{{index . 1}}" alt="post image" width="800px">
-    <button oninput="Like" value=""></button>
+    <button oninput="/Like" value="{{ .LikeCount}}"></button>
     {{end}}
 </div>
 {{end}}
