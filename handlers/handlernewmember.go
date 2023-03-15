@@ -34,7 +34,7 @@ func GetNewMemberInfo(e echo.Context) error {
 		HaHaGeenAdminLoser := "Sorry, maar je bent geen admin voor deze groep. Je kan niemand toevoegen."
 		return e.Render(http.StatusUnauthorized, "member", echo.Map{"Admin_message": HaHaGeenAdminLoser, "Groups": groups, "RecentPosts": RecentPosts, "Users": AllUsers})
 	} else if CheckForAdmin == true {
-		IsMember, err := repositories.CheckGroupMembers(UserID, GroupID)
+		IsMember, err := repositories.CheckIfInGroup(UserID, GroupID)
 		if IsMember == true {
 			UserIsAlMember := "Sorry, maar deze user is al toegevoegd aan de groep, check de naam nog een keer"
 			return e.Render(http.StatusUnauthorized, "member", echo.Map{"Admin_message": UserIsAlMember, "Groups": groups, "RecentPosts": RecentPosts, "Users": AllUsers})

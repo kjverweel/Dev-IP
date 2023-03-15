@@ -5,7 +5,7 @@ import (
 	"main.go/models"
 )
 
-func CheckGroupMembers(UserID int, GroupID int) (bool, error) {
+func CheckIfInGroup(UserID int, GroupID int) (bool, error) {
 	var member models.Groupmembers
 	err := db.Where("user_id = ? AND groep_id = ?", UserID, GroupID).First(&member).Error
 	if err != nil {
