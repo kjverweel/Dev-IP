@@ -16,9 +16,7 @@ func GetNewMemberInfo(e echo.Context) error {
 	}
 
 	GroepadminID, err := strconv.ParseUint(cookie.Value, 10, 64) //convert from cookie
-	Groupies := &models.Groups{
-		Groepname: e.FormValue("GroupName"),
-	}
+	Groupies := e.FormValue("GroupName")
 	Usersies := &models.Users{
 		UserNickname: e.FormValue("UserName"),
 	}
@@ -26,7 +24,8 @@ func GetNewMemberInfo(e echo.Context) error {
 	UserID, err := repositories.CompareUsername(Usersies)
 	GroupID, err := repositories.CompareGroupname(Groupies)
 	CheckForAdmin := repositories.IsAnAdmin(int(GroepadminID), GroupID)
-	RecentPosts, err := repositories.GetRecentPosts(GroupID)
+	GroepID, err := repositories.GetGroupsFromMembers(int(GroepadminID))
+	RecentPosts, err := repositories.GetRecentPosts(GroepID)
 	groups, err := repositories.GetGroup()
 	AllUsers, err := repositories.GetAllUsers()
 

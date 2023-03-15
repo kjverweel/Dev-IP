@@ -18,30 +18,31 @@ func Home(e echo.Context) error {
 		log.Println("handlerhome.go:Couldn't get cookie")
 		e.Render(http.StatusOK, "index", nil)
 	}
+
 	user := &models.Users{}
 	err = repositories.GetUser(uint(userId), &user)
 	if err != nil {
-		log.Println("handlerhome.go:Couldn't get cookie")
+		log.Println("handlerhome.go:Couldn't get username")
 	}
-	groups, err := repositories.GetGroup()
+	GroepID, err := repositories.GetGroupsFromMembers(int(userId))
+	AllGroups := repositories.GetGroups(GroepID)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Failed to get groups",
 		})
 	}
-	if groups == nil {
+
+	if AllGroups == nil {
 		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet"})
 	}
 
-	GroepID, err := repositories.GetGroupsFromMembers(int(userId))
-
-	RecentPosts, err := repositories.GetRecentPosts(GroepID[0])
+	RecentPosts, err := repositories.GetRecentPosts(GroepID)
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get recents posts")
 	}
 	log.Println("handlerhome:", RecentPosts)
 
-	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups, "RecentPosts": RecentPosts})
+	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "AllGroups": AllGroups, "RecentPosts": RecentPosts})
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
