@@ -8,4 +8,5 @@ type Posts struct {
 	PostContent       string `gorm:"type:varchar(1000)"`
 	UserID            int
 	PostImageLocation string `gorm:"type:varchar(100)"`
+	LikeCount         int
 }
