@@ -5,7 +5,7 @@ import (
 	"main.go/models"
 )
 
-// function called by the handler with the data
+//Maakt de nieuwe post aan die is doorgegeven vanuit
 func NewPost(Post *models.Posts) error {
 	err := db.Create(Post).Error
 	if err != nil {
