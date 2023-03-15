@@ -39,8 +39,13 @@ func CreateNewPost(e echo.Context) error {
 	}
 	//hier pakt hij de files die in de formfield "image zitten
 	file, err := e.FormFile("Image")
+
 	filename := file.Filename //deze slaat hij op in de var filename
+
 	// TODO: Elke bestandsnaam een unieke naam /id geven, je kan nu niet alle foto's uploaden
+
+	//idee := naam omzetten naar een int, de laatse image eruit pakken, en int +1 doen. Oneindig lang doorgaan
+	//daarvoor: filepath en name opslpitsen. filepath is fixed, name = int
 	if err != nil {
 		// stuurt een 400 error terug, als er geen image bij zat of er ging wat fout :)
 		return echo.NewHTTPError(http.StatusBadRequest, "Image file not found")
