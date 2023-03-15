@@ -20,10 +20,10 @@ func SepGroup(e echo.Context) error {
 	Groepname := e.Param("groupname")
 	GroepID, err := repositories.GetSepNames(Groepname)
 	log.Println("dit print groepid:", GroepID)
-	RecentPosts, err := repositories.GetRecentPosts(GroepID)
+	RecentPosts, err := repositories.GetRecentPosts([]int{GroepID})
 	if err != nil {
 		return err
 	}
 	log.Println("Dit print recentposts:", RecentPosts)
-	return e.Render(http.StatusOK, "sepgroup.html", echo.Map{"Groupname": Groepname, "RecentPosts": RecentPosts})
+	return e.Render(http.StatusOK, "sepgroup.html", echo.Map{"GroepName": Groepname, "RecentPosts": RecentPosts})
 }

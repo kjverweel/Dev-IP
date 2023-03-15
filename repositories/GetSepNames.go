@@ -1,15 +1,13 @@
 package repositories
 
-import "log"
+import (
+	"log"
+	"main.go/models"
+)
 
-func GetSepNames(Groepname string) ([]int, error) {
-	log.Println(Groepname)
-	var GroupID []int
-	err := db.Table("groups").Where("groepname IN (?)", Groepname).Pluck("id", &GroupID)
-	if err != nil {
-		log.Println(err)
-		return nil, nil
-	}
-	log.Println("GetSepNames", GroupID)
-	return GroupID, nil
+func GetSepNames(Groepname string) (int, error) {
+	group := &models.Groups{}
+	db.Where("groepname = ?", Groepname).First(&group)
+	log.Println(group)
+	return int(group.ID), nil
 }
