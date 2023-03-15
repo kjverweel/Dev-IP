@@ -20,8 +20,14 @@
 <li>{{ . }}</li>
 {{end}}
 
-{{.RecentPosts}}
-
+{{range .RecentPosts}}
+<div>
+    <p>{{index . 0}}</p>
+    {{if ne (index . 1) ""}}
+    <img src="{{index . 1}}" alt="post image" width="200px">
+    {{end}}
+</div>
+{{end}}
 </body>
 </html>
 {{end}}
