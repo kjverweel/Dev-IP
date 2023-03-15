@@ -18,8 +18,11 @@ func Groups(e echo.Context) error {
 
 func SepGroup(e echo.Context) error {
 	AllGroups := e.Param("groupname")
-	GroepID := repositories.GetSepNames
+	GroepID := repositories.GetSepNames(AllGroups)
 	RecentPosts, err := repositories.GetRecentPosts(GroepID)
+	if err != nil {
+		return err
+	}
 	Data := map[string]interface{}{
 		"GroupName":   AllGroups,
 		"RecentPosts": RecentPosts,

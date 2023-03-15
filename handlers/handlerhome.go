@@ -25,7 +25,7 @@ func Home(e echo.Context) error {
 		log.Println("handlerhome.go:Couldn't get username")
 	}
 	GroepID, err := repositories.GetGroupsFromMembers(int(userId))
-	AllGroups, err := repositories.GetGroup(GroepID)
+	AllGroups, err := repositories.GetGroup()
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Failed to get groups",

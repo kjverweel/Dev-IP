@@ -5,17 +5,10 @@ import (
 	"log"
 	"main.go/repositories"
 	"net/http"
-	"strconv"
 )
 
 func Posts(e echo.Context) error {
-	cookie, err := e.Cookie("User") //get User_ID from cookie
-	if err != nil {
-		log.Println("couldn't get cookie")
-	}
-	userId, err := strconv.ParseUint(cookie.Value, 10, 64)
-	GroepID, err := repositories.GetGroupsFromMembers(int(userId))
-	groups, err := repositories.GetGroup(GroepID)
+	groups, err := repositories.GetGroup()
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Failed to get groups",
