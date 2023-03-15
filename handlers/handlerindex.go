@@ -6,6 +6,7 @@ import (
 	"net/http"
 )
 
+// in deze twee functies worden de login en register gerenderd zodat users kunnen inloggen :D
 func Loginscreen(e echo.Context) error {
 	err := e.Render(http.StatusOK, "login", nil)
 	if err != nil {
