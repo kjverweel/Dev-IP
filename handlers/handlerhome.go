@@ -33,7 +33,9 @@ func Home(e echo.Context) error {
 		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet"})
 	}
 
-	RecentPosts, err := repositories.GetRecentPosts()
+	GroepID, err := repositories.GetGroupsFromMembers(int(userId))
+
+	RecentPosts, err := repositories.GetRecentPosts(GroepID[0])
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get recents posts")
 	}

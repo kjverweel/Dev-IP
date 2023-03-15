@@ -10,29 +10,20 @@ import (
 )
 
 func CreateGroup(e echo.Context) error {
-	//Cookiecode
-	// get cookie from request
-	cookie, err := e.Cookie("User")
-	// parse cookie string value to uint
-	userId, err := strconv.ParseUint(cookie.Value, 10, 64)
+	cookie, err := e.Cookie("User") //get User_ID from cookie
 	if err != nil {
-		//if an error occurs in Cookiecode this usually means that the user isn't logged in properly.
-		//this e.Render causes a direct to the index page, where you can log in or register an account.
-		log.Println("handlerhome.go:Couldn't get cookie")
-		e.Render(http.StatusOK, "index", nil)
+		log.Println("couldn't get cookie")
 	}
-	user := &models.Users{}
-	err = repositories.GetUser(uint(userId), &user)
-	AdminID := strconv.FormatUint(userId, 10)
-	log.Println(AdminID)
+	UserId, err := strconv.ParseUint(cookie.Value, 10, 64) //convert from cookie
+	log.Println("Handlercreategroup.go:", UserId)
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get cookie")
 	}
 
 	newGroup := &models.Groups{
-		Groepname:    e.FormValue("Groepsnaam"),
-		GroepadminID: AdminID,
+		Groepname: e.FormValue("Groepsnaam"),
 	}
+
 	GroupExists, err := repositories.CheckGroup(newGroup)
 	if err != nil || GroupExists {
 		log.Println("handlercreategroup.go:group already exist or You did fucky")
@@ -44,5 +35,14 @@ func CreateGroup(e echo.Context) error {
 	} else {
 		log.Println("handlercreategroup.go:Succesfully called")
 	}
+	NewGroupID := repositories.GetLatestGroup()
+	log.Println(NewGroupID)
+
+	NewMember := &models.Groupmembers{
+		UserID:  int(UserId),
+		GroepID: NewGroupID,
+		Admin:   true,
+	}
+	err = repositories.NewMember(NewMember)
 	return e.Redirect(http.StatusSeeOther, "/home")
 }

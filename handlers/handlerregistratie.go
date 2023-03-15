@@ -20,7 +20,6 @@ func Register(e echo.Context) error {
 	if err != nil || YouHere {
 		log.Println("handlerregstratie.go:User already exist or You did fucky")
 		return e.Render(http.StatusOK, "register", echo.Map{"NuhUh": "Deze user bestaat al, wees origineel"})
-
 	}
 	err = repositories.NewUsers(newUser)
 	if err != nil {

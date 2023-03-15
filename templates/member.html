@@ -10,7 +10,7 @@
 </nav>
 <body>
 <h1>Lid toevoegen aan groep</h1>
-<form action="/home" method="post">
+<form action="/member" method="post">
     <p>nieuw groepslid</p>
     <input placeholder="Groepsnaam" list="groups" name="GroupName" required>
     <datalist id="groups">
@@ -24,7 +24,12 @@
         <option value={{ . }}></option>
         {{end}}
     </datalist>
-    <input type="submit" value="New Member">
+    <input placeholder="Admin" list="AdminYesNo" name="Admin" required>
+    <datalist id="AdminYesNo">
+        <option value="Wel Admin"></option>
+        <option value="Geen Admin"></option>
+    </datalist>
+    <input type="submit" value="New Member"> {{.Admin_message}}
 </form>
 </body>
 </html>
