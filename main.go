@@ -29,6 +29,7 @@ func main() {
 	e.GET("/home", handlers.Home)
 	e.GET("/register", handlers.Registerscreen)
 	e.POST("/register", handlers.Register)
+	e.GET("/sepgroup/:groupname", handlers.SepGroup)
 	e.GET("/groups", handlers.Groups)
 	e.POST("/groups", handlers.CreateGroup)
 	e.GET("/member", handlers.Member)

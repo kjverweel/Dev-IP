@@ -23,13 +23,13 @@ func Home(e echo.Context) error {
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get cookie")
 	}
-	groups, err := repositories.GetGroup()
+	AllGroups, err := repositories.GetGroup()
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Failed to get groups",
 		})
 	}
-	if groups == nil {
+	if AllGroups == nil {
 		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet"})
 	}
 
@@ -41,7 +41,7 @@ func Home(e echo.Context) error {
 	}
 	log.Println("handlerhome:", RecentPosts)
 
-	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "Groups": groups, "RecentPosts": RecentPosts})
+	err = e.Render(http.StatusOK, "home", echo.Map{"Nem": user.UserNickname, "AllGroups": AllGroups, "RecentPosts": RecentPosts})
 	if err != nil {
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}

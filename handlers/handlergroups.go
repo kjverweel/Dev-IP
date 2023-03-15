@@ -14,3 +14,12 @@ func Groups(e echo.Context) error {
 	log.Println("handlergroups.go:Succesfully made it to /groups")
 	return nil
 }
+
+func SepGroup(e echo.Context) error {
+	AllGroups := e.Param("groupname")
+	Data := map[string]interface{}{
+		"GroupName": AllGroups,
+	}
+	log.Println(Data)
+	return e.Render(http.StatusOK, "sepgroup.html", Data)
+}
