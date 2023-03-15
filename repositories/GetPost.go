@@ -7,7 +7,9 @@ import (
 func GetRecentPosts(GroepID []int) ([][]string, error) {
 	var recentPostContents [][]string
 
-	for i := 0; i < 8; i++ {
+	TotalPosts := CountPosts
+
+	for i := 0; i < TotalPosts(); i++ {
 		var post models.Posts
 		result := db.Table("Posts").Select("post_content, post_image_location").Where("groep_id IN (?)", GroepID).Order("created_at desc").Limit(1).Offset(i).Find(&post)
 
@@ -18,4 +20,10 @@ func GetRecentPosts(GroepID []int) ([][]string, error) {
 	}
 
 	return recentPostContents, nil
+}
+
+func CountPosts() int {
+	var Totalposts int64
+	db.Table("Posts").Distinct("id").Count(&Totalposts)
+	return int(Totalposts)
 }
