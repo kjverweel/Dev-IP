@@ -40,9 +40,7 @@ func CreateNewPost(e echo.Context) error {
 
 	//end of Cookiecode
 	//takes the name of the group
-	Groepname := &models.Groups{
-		Groepname: e.FormValue("GroupName"),
-	}
+	Groepname := e.FormValue("GroupName")
 	log.Println("handlerscreatenwepost:", Groepname) //prints groepname for confirmation
 
 	//query's the groupname into the database to find the ID

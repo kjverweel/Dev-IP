@@ -17,9 +17,9 @@ func CheckGroup(newGroup *models.Groups) (bool, error) {
 	return true, nil
 }
 
-func CompareGroupname(GetID *models.Groups) (int, error) {
+func CompareGroupname(groupname string) (int, error) {
 	var GroupID int
-	err := db.Model(&models.Groups{}).Select("id").Where("groepname = ?", GetID).Scan(&GroupID).Error
+	err := db.Model(&models.Groups{}).Select("id").Where("groepname = ?", groupname).Scan(&GroupID).Error
 	if err == gorm.ErrRecordNotFound {
 		log.Println("CompareUsers.go:This is a database fault")
 		return 0, err

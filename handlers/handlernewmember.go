@@ -16,9 +16,7 @@ func GetNewMemberInfo(e echo.Context) error {
 	}
 
 	GroepadminID, err := strconv.ParseUint(cookie.Value, 10, 64) //convert from cookie
-	Groupies := &models.Groups{
-		Groepname: e.FormValue("GroupName"),
-	}
+	Groupies := e.FormValue("GroupName")
 	Usersies := &models.Users{
 		UserNickname: e.FormValue("UserName"),
 	}

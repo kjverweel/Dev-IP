@@ -17,16 +17,13 @@ func Groups(e echo.Context) error {
 }
 
 func SepGroup(e echo.Context) error {
-	AllGroups := e.Param("groupname")
-	GroepID := repositories.GetSepNames(AllGroups)
+	Groepname := e.Param("groupname")
+	GroepID, err := repositories.CompareGroupname(Groepname)
+	log.Println("dit print groepid:", GroepID)
 	RecentPosts, err := repositories.GetRecentPosts(GroepID)
 	if err != nil {
 		return err
 	}
-	Data := map[string]interface{}{
-		"GroupName":   AllGroups,
-		"RecentPosts": RecentPosts,
-	}
-	log.Println(Data)
-	return e.Render(http.StatusOK, "sepgroup.html", Data)
+	log.Println("Dit print recentposts:", RecentPosts)
+	return e.Render(http.StatusOK, "sepgroup.html", echo.Map{"Groupname": Groepname, "RecentPosts": RecentPosts})
 }
