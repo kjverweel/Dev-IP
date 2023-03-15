@@ -10,15 +10,15 @@ import (
 )
 
 func CreateGroup(e echo.Context) error {
-	cookie, err := e.Cookie("User") //get User_ID from cookie
+	cookie, err := e.Cookie("User") //pakt uit het koekje de id van de user die is ingelogd
 	if err != nil {
 		log.Println("couldn't get cookie")
-		return e.Render(http.StatusUnauthorized, "groups", echo.Map{"ErrorGroep": "sorry, maar momenteel kan je geen groepen maken. Contact een admin of kom later terug."}) //logs the error and return user to login
+		return e.Render(http.StatusUnauthorized, "groups", echo.Map{"ErrorGroep": "sorry, maar momenteel kan je geen groepen maken. Contact een admin of kom later terug."}) //logt de error en stuurt de user terug aar de login
 	}
 	UserId, err := strconv.ParseUint(cookie.Value, 10, 64) //convert cookie from struct field to Unique integer
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get cookie")
-		return e.Render(http.StatusNotFound, "groups", echo.Map{"ErrorGroep": "sorry, maar momenteel kan je geen groepen maken. Contact een admin of kom later terug."}) // logs the error and returns to the /groups page
+		return e.Render(http.StatusNotFound, "groups", echo.Map{"ErrorGroep": "sorry, maar momenteel kan je geen groepen maken. Contact een admin of kom later terug."}) //logt de error en stuurt de user terug naar /groups
 	}
 	newGroup := &models.Groups{
 		Groepname: e.FormValue("Groepsnaam"),
