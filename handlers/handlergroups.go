@@ -18,7 +18,7 @@ func Groups(e echo.Context) error {
 
 func SepGroup(e echo.Context) error {
 	Groepname := e.Param("groupname")
-	GroepID, err := repositories.CompareGroupname(Groepname)
+	GroepID, err := repositories.GetSepNames(Groepname)
 	log.Println("dit print groepid:", GroepID)
 	RecentPosts, err := repositories.GetRecentPosts(GroepID)
 	if err != nil {
