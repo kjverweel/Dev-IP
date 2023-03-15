@@ -3,6 +3,7 @@ package handlers
 import (
 	"github.com/labstack/echo/v4"
 	"log"
+	"main.go/repositories"
 	"net/http"
 )
 
@@ -17,8 +18,11 @@ func Groups(e echo.Context) error {
 
 func SepGroup(e echo.Context) error {
 	AllGroups := e.Param("groupname")
+	GroepID := repositories.GetSepNames
+	RecentPosts, err := repositories.GetRecentPosts(GroepID)
 	Data := map[string]interface{}{
-		"GroupName": AllGroups,
+		"GroupName":   AllGroups,
+		"RecentPosts": RecentPosts,
 	}
 	log.Println(Data)
 	return e.Render(http.StatusOK, "sepgroup.html", Data)

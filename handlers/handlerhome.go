@@ -18,22 +18,23 @@ func Home(e echo.Context) error {
 		log.Println("handlerhome.go:Couldn't get cookie")
 		e.Render(http.StatusOK, "index", nil)
 	}
+
 	user := &models.Users{}
 	err = repositories.GetUser(uint(userId), &user)
 	if err != nil {
-		log.Println("handlerhome.go:Couldn't get cookie")
+		log.Println("handlerhome.go:Couldn't get username")
 	}
-	AllGroups, err := repositories.GetGroup()
+	GroepID, err := repositories.GetGroupsFromMembers(int(userId))
+	AllGroups, err := repositories.GetGroup(GroepID)
 	if err != nil {
 		return e.JSON(http.StatusInternalServerError, map[string]interface{}{
 			"message": "Failed to get groups",
 		})
 	}
+
 	if AllGroups == nil {
 		e.Render(http.StatusOK, "home", echo.Map{"Groups": "Unfortunately, there are no groups yet"})
 	}
-
-	GroepID, err := repositories.GetGroupsFromMembers(int(userId))
 
 	RecentPosts, err := repositories.GetRecentPosts(GroepID)
 	if err != nil {
