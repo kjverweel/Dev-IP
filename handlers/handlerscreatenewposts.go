@@ -13,91 +13,71 @@ import (
 
 func CreateNewPost(e echo.Context) error {
 
-	//Cookiecode
-	// get cookie from request
-	cookie, err := e.Cookie("User")
+	cookie, err := e.Cookie("User") //pakt uit het koekje de id van de user die is ingelogd
 	// parse cookie string value to uint
-	userId, err := strconv.ParseUint(cookie.Value, 10, 64)
-	log.Println("handlerscreatenwepost:", userId)
+	userId, err := strconv.ParseUint(cookie.Value, 10, 64) //zet het koekje om van struct naar een Uint
 	if err != nil {
-		//if an error occurs in Cookiecode this usually means that the user isn't logged in properly.
-		//this e.Render causes a direct to the index page, where you can log in or register an account.
-		log.Println("handlercreatenewpost.go:Couldn't get cookie")
-		err := e.Render(http.StatusOK, "index", nil)
-		if err != nil {
-			return err
-		}
+		log.Println("couldn't get cookie")
+		return e.Render(http.StatusUnauthorized, "register", echo.Map{"NuhUh": "sorry, maar er gaat wat fout"}) //logt de error en stuurt de user terug aar de registratiepagina
 	}
-
-	//take userid for laters
+	//Pak het UserID voor laters
 	userID := uint(userId)
 	user := &models.Users{}
 	err = repositories.GetUser(uint(userId), &user)
 	if err != nil {
 		log.Println("handlercreatenewpost.go:Couldn't get cookie")
 	}
-	log.Println("handlerscreatenwepost:", user) //prints userID for confirmation
-
-	//end of Cookiecode
-	//takes the name of the group
+	//Pak de naam van de groep
 	Groepname := e.FormValue("GroupName")
 	log.Println("handlerscreatenwepost:", Groepname) //prints groepname for confirmation
 
-	//query's the groupname into the database to find the ID
+	//zoekt de ID die bij de groepname hoort
 	GroupID, err := repositories.CompareGroupname(Groepname)
 	if err != nil {
 		log.Println("handlercreatenewpost.go:couldn't find matching ID")
 		return err
 	}
-	log.Println("handlercreatenewpost.go:GroupID is", GroupID)
-
+	//hier pakt hij de files die in de formfield "image zitten
 	file, err := e.FormFile("Image")
-	filename := file.Filename
-	log.Println("filename: ", filename)
-
+	filename := file.Filename //deze slaat hij op in de var filename
+	// TODO: Elke bestandsnaam een unieke naam /id geven, je kan nu niet alle foto's uploaden
 	if err != nil {
-		// Return a 400 Bad Request error to the client if no file was uploaded or if there was an error parsing the form data.
+		// stuurt een 400 error terug, als er geen image bij zat of er ging wat fout :)
 		return echo.NewHTTPError(http.StatusBadRequest, "Image file not found")
 	}
-	src, err := file.Open()
-	if err != nil {
-		// Return a 500 Internal Server Error to the client if there was an error opening the file.
+	src, err := file.Open() //het openen van de file is belangrijk om ervoor te zorgen dat de file goed wordt geuploadt
+	if err != nil {         //als er iets fout gaat tijdens het verwerken van een afbeelding krijg je een 500, internalserver error
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
-	defer src.Close()
+	defer src.Close() //Het sluiten van de "src" zorgt ervoor dat in het verdere process geen problemen komen
 
-	// Destination
+	// os.Create slaat de filename op, met daarvoor de relatieve path voor waar de images worden opgeslagen
 	dst, err := os.Create("./uploads/" + filename)
-	if err == nil {
-		log.Println("THIS BETTER FUCKING WORK")
-	}
 	if err != nil {
-		// Return a 500 Internal Server Error to the client if there was an error creating the file.
+		//als er iets fout gaat tijdens het verwerken van een afbeelding krijg je een 500, internalserver error
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 	defer src.Close()
 
+	//io.copy zorgt ervoor dat de afbeelding van de source, 'src', naar de destination, 'dst' word gezet
 	if _, err := io.Copy(dst, src); err != nil {
-		// Return a 500 Internal Server Error to the client if there was an error copying the contents of the file.
+		//als er iets fout gaat tijdens het verwerken van een afbeelding krijg je een 500, internalserver error
 		return echo.NewHTTPError(http.StatusInternalServerError, err.Error())
 	}
 
-	filelocation := "./uploads/" + filename
-	log.Println(filelocation)
+	filelocation := "./uploads/" + filename //filelocation wordt later gebruikt in de struct om de afbeelding weer op te kunnen roepen
 
-	//data uploaded to the database
-	Post := &models.Posts{
+	//struct om de data in op te slaan die uit de forms zijn verzameld
+	Post := &models.Posts{ //de struct die wordt gebruikt om de posts aan te maken
 		PostContent:       e.FormValue("PostContent"),
 		UserID:            int(userID),
 		GroepID:           GroupID,
 		PostImageLocation: filelocation,
 	}
-
-	log.Println(Post) //for confirmation the correct data was passed
-	//appends the function that uploads the data to the database
+	//geeft de Post data door aan de repo om een nieuwe post aan te maken
 	err = repositories.NewPost(Post)
 	if err != nil {
-		log.Println("you done fucked up now boi")
+		log.Println("Oh Oh hier gaat iets fout")
 	} else {
 		log.Println("Succes!")
 	}
