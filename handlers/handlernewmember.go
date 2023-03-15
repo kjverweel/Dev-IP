@@ -26,7 +26,8 @@ func GetNewMemberInfo(e echo.Context) error {
 	UserID, err := repositories.CompareUsername(Usersies)
 	GroupID, err := repositories.CompareGroupname(Groupies)
 	CheckForAdmin := repositories.IsAnAdmin(int(GroepadminID), GroupID)
-	RecentPosts, err := repositories.GetRecentPosts(GroupID)
+	GroepID, err := repositories.GetGroupsFromMembers(int(GroepadminID))
+	RecentPosts, err := repositories.GetRecentPosts(GroepID)
 	groups, err := repositories.GetGroup()
 	AllUsers, err := repositories.GetAllUsers()
 

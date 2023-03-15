@@ -35,7 +35,7 @@ func Home(e echo.Context) error {
 
 	GroepID, err := repositories.GetGroupsFromMembers(int(userId))
 
-	RecentPosts, err := repositories.GetRecentPosts(GroepID[0])
+	RecentPosts, err := repositories.GetRecentPosts(GroepID)
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get recents posts")
 	}
