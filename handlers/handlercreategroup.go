@@ -15,7 +15,7 @@ func CreateGroup(e echo.Context) error {
 		log.Println("couldn't get cookie")
 		return e.Render(http.StatusUnauthorized, "groups", echo.Map{"ErrorGroep": "sorry, maar momenteel kan je geen groepen maken. Contact een admin of kom later terug."}) //logt de error en stuurt de user terug aar de login
 	}
-	UserId, err := strconv.ParseUint(cookie.Value, 10, 64) //convert cookie from struct field to Unique integer
+	UserId, err := strconv.ParseUint(cookie.Value, 10, 64) //zet het koekje om van struct naar een Uint
 	if err != nil {
 		log.Println("handlerhome.go:Couldn't get cookie")
 		return e.Render(http.StatusNotFound, "groups", echo.Map{"ErrorGroep": "sorry, maar momenteel kan je geen groepen maken. Contact een admin of kom later terug."}) //logt de error en stuurt de user terug naar /groups
