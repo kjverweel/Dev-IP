@@ -27,3 +27,7 @@ func CountPosts() int {
 	db.Table("Posts").Distinct("id").Count(&Totalposts)
 	return int(Totalposts)
 }
+
+func showStefan() {
+
+}
